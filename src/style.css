@@ -13,8 +13,12 @@ body {
 }
 
 .container {
+  height: 10vh;
+
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
 }
 
 /* #file__input {
@@ -24,9 +28,3 @@ body {
 /* position: absolute; */
 /* top: 45%; */
 /* } */
-
-#file__input,
-#btn__start,
-#chunk__size {
-  margin-bottom: 1rem;
-}
