@@ -1,9 +1,19 @@
 const fileInput = document.getElementById("file__input");
 const startButton = document.getElementById("btn__start");
+const chunkSizeInput = document.getElementById("chunk__size");
+
+let chunkSize;
 let originalFileName;
 
 startButton.addEventListener("click", () => {
-  if (!fileInput.files.length) return;
+  if (!fileInput.files.length)
+    return alert("Please choose a .srt file and try again!");
+
+  if (!chunkSizeInput.value > 0) {
+    return alert("Please specify the chunk size you want to divide by!");
+  } else {
+    chunkSize = chunkSizeInput.value;
+  }
 
   const file = fileInput.files[0];
   originalFileName = file.name.split(".")[0]; // get name of file as it is uploaded
@@ -41,6 +51,8 @@ const modifySubtitles = (subtitles) => {
       // spliting block chunk in words
       const words = text.split(" ");
       let chunks = [];
+      let currrentChunk = [];
+      let chunkStartIndex = 0;
 
       // parse timestamp into start and end time
       const [startTime, endTime] = time.split(" --> ");
@@ -50,21 +62,43 @@ const modifySubtitles = (subtitles) => {
       const duration = end - start;
       const durationPerWord = duration / words.length; // time per word
 
-      for (let i = 0; i < words.length; i += 3) {
-        const chunkWords = words.slice(i, i + 3); // get next 3 words
-        const chunk = chunkWords.join(" "); // combine these 3 words in one sentence
-        // calculating chunk start time
-        const chunkStart = new Date(start.getTime() + i * durationPerWord);
-        // calculating chunk end time
-        const chunckEnd = new Date(
-          start.getTime() + (i + chunkWords.length) * durationPerWord
-        );
+      words.forEach((word, index) => {
+        currrentChunk.push(word);
 
-        // pushing chunk in final array
+        // if a words contains dot (.) finalize chunk
+        if (word.includes(".") || currrentChunk.length >= 3) {
+          const chunkWords = currrentChunk.join(" ");
+          const chunkStart = new Date(
+            start.getTime() + chunkStartIndex * durationPerWord
+          );
+          const chunk = new Date(
+            start.getTime() + (index + 1) * durationPerWord
+          );
+
+          chunks.push({
+            id: `${id}.${Math.floor(chunkStartIndex / 3 + 1)}`,
+            time: `${formateTime(chunkStart)} --> ${formateTime(chunk)}`,
+            text: chunkWords,
+          });
+
+          // reset the chunk and update start index
+          currrentChunk = [];
+          chunkStartIndex = index + 1;
+        }
+      });
+
+      // Adding any remaining words at the last chunk
+      if (currrentChunk.length > 0) {
+        const chunkWords = currrentChunk.join(" ");
+        const chunkStart = new Date(
+          start.getTime() + chunkStartIndex * durationPerWord
+        );
+        const chunkEnd = new Date(end.getTime());
+
         chunks.push({
-          id: `${id}.${Math.floor(i / 3 + 1)}`,
-          time: `${formateTime(chunkStart)} --> ${formateTime(chunckEnd)}`,
-          text: chunk,
+          id: `${id}.${Math.floor(chunkStartIndex / 3 + 1)}`,
+          time: `${formateTime(chunkStart)} --> ${formateTime(chunkEnd)}`,
+          text: chunkWords,
         });
       }
 

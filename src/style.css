@@ -26,6 +26,7 @@ body {
 /* } */
 
 #file__input,
-#btn__start {
+#btn__start,
+#chunk__size {
   margin-bottom: 1rem;
 }
