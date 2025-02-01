@@ -1,0 +1,16 @@
+{
+  "name": "subtitle_plugin",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.js --dist-dir ./dist"
+  },
+  "keywords": [],
+  "author": "Corneliu Procopenco",
+  "license": "ISC",
+  "description": "A simple application that takes already generated with AI .srt files that are captions for video with timestamp and divide all text in 2-3 chunck words for fast subtitle editing style.",
+  "dependencies": {
+    "parcel": "^2.13.3"
+  }
+}

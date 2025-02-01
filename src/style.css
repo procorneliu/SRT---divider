@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* #file__input {
+  width: 100vh;
+  height: 100vh; */
+
+/* position: absolute; */
+/* top: 45%; */
+/* } */
+
+#file__input,
+#btn__start {
+  margin-bottom: 1rem;
+}
