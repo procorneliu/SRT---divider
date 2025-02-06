@@ -10,10 +10,26 @@
   <body>
     <div class="container">
       <input type="file" id="file__input" accept=".srt" />
-      <input type="range" name="chunk__size" id="chunk__size" min="1" max="20" value="3" />
-      <p id="chunk_value">3</p>
-      <button id="btn__start">START PROCESSING</button>
+      <input type="range" name="chunk__size" id="chunk__size" min="10" max="100" value="21" />
+      <p>Character length:</p>
+      <p id="chunk_value">21</p>
 
+      <label for="language">Select language:</label>
+      <select name="language" id="language">
+        <option value="english">English</option>
+        <option value="chinese">Chinese</option>
+        <option value="spanish">Spanish</option>
+        <option value="french">French</option>
+        <option value="arabic">Arabic</option>
+        <option value="russian">Russian</option>
+        <option value="portuguese">Portuguese</option>
+        <option value="japanese">Japanese</option>
+        <option value="german">German</option>
+        <option value="italian">Italian</option>
+        <option value="romanian">Romanian</option>
+      </select>
+
+      <button id="btn__start">START PROCESSING</button>
       <button id="btn__download" style="display: none">Download</button>
     </div>
   </body>

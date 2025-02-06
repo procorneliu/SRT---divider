@@ -13,7 +13,7 @@ body {
 }
 
 .container {
-  height: 10vh;
+  height: 15vh;
 
   display: flex;
   flex-direction: column;

@@ -3,4 +3,4 @@ dev_data
 dist
 node_modules
 .DS_Store
-SRT_EXAMPLE_modified.srt
+*.srt
