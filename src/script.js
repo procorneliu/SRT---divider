@@ -87,6 +87,12 @@ const adjustChunksForNumbers = (srtText) => {
   return srtText;
 };
 
+const detectUnits = (word) => {
+  const unitPatterns = [/\d+\s?(kg|g|m|cm|km|h|km\/h|mbps|secs|min|s|ft|in|lbs|mi)/i, /\d+\s?[A-Za-z]+/];
+
+  return unitPatterns.some((pattern) => pattern.test(word));
+};
+
 // all subtitles processing
 const modifySubtitles = (subtitles, maxCharacters) => {
   return subtitles
@@ -114,7 +120,6 @@ const modifySubtitles = (subtitles, maxCharacters) => {
       text.split(' ').forEach((word, index, words) => {
         // adjust time for numbers (numbers take more time to pronounce)
         let extraTime = 0;
-        // if (/\d/.test(word)) {
         if (/\d+/.test(word)) {
           // multiply duration for chunks containing numbers
           extraTime = durationPerCharacter * word.length * 4; // add more x4 time for numbers
@@ -183,6 +188,12 @@ const modifySubtitles = (subtitles, maxCharacters) => {
           // reset chunk
           currentStart = new Date(chunkEnd.getTime());
           currentChunk = '';
+        }
+
+        // to ensure words like '2 km' will not be splitted
+        if (detectUnits(word)) {
+          currentChunk += (currentChunk ? ' ' : '') + word;
+          return;
         }
 
         // If adding words exeeds max character, create a new chunk

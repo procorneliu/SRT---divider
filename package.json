@@ -1,10 +1,9 @@
 {
   "name": "subtitle_plugin",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.js --dist-dir ./dist"
+    "build": "parcel build index.html --dist-dir ./dist"
   },
   "keywords": [],
   "author": "Corneliu Procopenco",
